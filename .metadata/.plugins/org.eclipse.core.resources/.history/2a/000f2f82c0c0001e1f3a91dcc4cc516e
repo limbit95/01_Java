@@ -1,0 +1,13 @@
+package edu.kh.varialbe.ex1;
+
+public class VariableExample2 {
+
+	public static void main(String[] args) {
+
+		// 자바 기본 자료형 8가지 
+		// 1. 논리형 : boolean(1byte)
+		// 2. 
+		
+	}
+
+}

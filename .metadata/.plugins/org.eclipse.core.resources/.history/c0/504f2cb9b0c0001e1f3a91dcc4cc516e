@@ -1,0 +1,18 @@
+package edu.kh.varialbe.ex1;
+
+public class VariableExample1 {
+	
+	// java 파일을 실행할 때 main 메서드를 가장 먼저 찾는다
+	public static void main(String[] args) {
+		
+		// 변수 사용하지 않고 출력
+		System.out.println(2 * 3.141592653589793 * 10);
+		System.out.println(3.141592653589793 * 10 * 10);
+		System.out.println(3.141592653589793 * 10 * 10 * 20);
+		System.out.println(4 * 3.141592653589793 * 10 * 10);
+		
+		
+		
+	}
+
+}
