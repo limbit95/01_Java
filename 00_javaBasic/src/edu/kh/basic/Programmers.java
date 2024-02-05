@@ -6,31 +6,22 @@ public class Programmers {
 	
 	public static void main(String[] args) {
 		
-		System.out.println(Solution(new int[] {1, 4, 2, 5, 3}));
+		System.out.println(solution("123"));
 		
 	}
 	
-	public static ArrayList<Integer> Solution(int[] arr) {
-		ArrayList<Integer> stk = new ArrayList<Integer>();
-		
-		int i = 0;
-		
-		while(i < arr.length) {
-			if(stk.isEmpty() == true) {
-				stk.add(arr[i]);
-				i++;
-				System.out.println("a");
-			} 
-//			else {
-//				if((stk.get(stk.size()-1)) < arr[i]) {
-//					stk.add(arr[i]);
-//					i++;
-//				} 
-//			}
-		}
-		
-		
-        return stk;
-	}
+	public static int solution(String number) {
+        int answer = 0;
+        
+        int sum = 0;
+        
+        for(int i = 0; i < number.length(); i++) {
+        	sum += number.charAt(i);
+        }
+        
+        answer = sum % 9;
+        
+        return answer;
+    }
 	
 }
