@@ -1,25 +1,20 @@
 package edu.kh.basic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Programmers {
 	
 	public static void main(String[] args) {
 		
-		System.out.println(solution("123"));
+		System.out.println(solution("ihrhbakrfpndopljhygc", 4, 2));
 		
 	}
 	
-	public static int solution(String number) {
-        int answer = 0;
+	public static String solution(String my_string, int m, int c) {
+        String answer = "";
         
-        int sum = 0;
         
-        for(int i = 0; i < number.length(); i++) {
-        	sum += number.charAt(i);
-        }
-        
-        answer = sum % 9;
         
         return answer;
     }

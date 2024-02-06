@@ -64,7 +64,12 @@ public class LoopPractice {
 	}
 	
 	public void practice5() {
-		
+		System.out.print("숫자 : ");
+		int input = sc.nextInt();
+		System.out.printf("=====%d단=====", input);
+		for(int i = 1; i <= 9; i++) {
+			System.out.printf("\n%d * %d = %d", input, i, input * i);
+		}
 	}
 	
 	public void practice6() {

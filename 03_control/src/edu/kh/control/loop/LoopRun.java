@@ -27,7 +27,9 @@ public class LoopRun {
 //		loop.practice1();
 //		loop.practice2();
 //		loop.practice3();
-		loop.practice4();
+//		loop.practice4();
+//		loop.practice5();
+		loop.practice6();
 		
 	}
 
