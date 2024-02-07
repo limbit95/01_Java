@@ -13,8 +13,15 @@ public class PracticeRun {
 //		prac.practice3();
 //		prac.practice4();
 //		prac.practice5();
-		prac.practice6();
+//		prac.practice6();
 //		prac.practice7();
+//		prac.practice8();
+//		prac.practice9();
+//		prac.practice10();
+//		prac.practice11();
+//		prac.practice12();
+//		prac.practice13();
+		prac.practice14();
 		
 	}
 

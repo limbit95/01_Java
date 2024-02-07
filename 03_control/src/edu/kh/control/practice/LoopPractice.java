@@ -73,11 +73,25 @@ public class LoopPractice {
 	}
 	
 	public void practice6() {
-		
+		System.out.print("숫자 : ");
+		int input = sc.nextInt();
+		if(input > 1 && input < 10) {
+			for(int i = input; i < 10; i++) {
+				System.out.println("=====" + i + "단 =====\n");
+			}
+		} else {
+			System.out.println("2~9 사이 숫자만 입력해주세요");
+		}
 	}
 	
 	public void practice7() {
-		
+		System.out.print("정수 입력 : ");
+		int input = sc.nextInt();
+		String star = "";
+		for(int i = 0; i < input; i++) {
+			star += "*";
+			System.out.println(star);
+		}
 	}
 	
 	public void practice8() {
