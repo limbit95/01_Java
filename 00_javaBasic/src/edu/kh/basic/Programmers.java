@@ -6,25 +6,27 @@ public class Programmers {
 	
 	public static void main(String[] args) {
 		
-		System.out.println(solution("Programmers"));
+		System.out.println(solution("apporoograpemmemprs", 
+				new int[]{1, 16, 6, 15, 0, 10, 11, 3}));
 		
 	}
 	
-	public static int[] solution(String my_string) {
-        int[] answer = new int[52];
+	public static String solution(String my_string, int[] indices) {
+        String answer = "";
         
-        // A~Z 65~90
-        // a~z 97~122
+        Arrays.sort(indices);
+        
+        int cnt = 0;
         
         for(int i = 0; i < my_string.length(); i++) {
-        	if(my_string.charAt(i) == my_string.toUpperCase().charAt(i)) {
-        		answer[(int)my_string.charAt(i) - 65] += 1;
+        	if(indices[cnt] != i) {
+        		cnt++;
+        		System.out.println(cnt);
         	} else {
-        		answer[(int)my_string.charAt(i) - 71] += 1;
+        		answer += my_string.charAt(i); 
         	}
+        	      	
         }
-        
-        System.out.println(Arrays.toString(answer));
         
         return answer;
     }
