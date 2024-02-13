@@ -41,16 +41,15 @@ public class Account {
 
 	// 입금
 	// 전달받은 금액을 잔액에 누적한 후, 현재 잔액을 콘솔에 출력
-	
 	public void deposit(int amount) {
-		if(amount < 0) {
-			System.out.println("금액을 잘못 입력하셨습니다");
-		} else {
+		if(amount > 0) {
 			this.balance += amount;
-			
-			System.out.println("입금 후 현재 잔액 : " + this.balance + "원");
+			System.out.println(this.balance);
+		} else {
+			System.out.println("금액을 잘 못 입력하셨습니다.");
 		}
 	}
+	
 	
 	// 출금
 	// 비밀번호와 출금할 금액을 전달받아와 조건에 맞으면 잔액에서 차감 후 현재 잔액 출력
@@ -68,7 +67,5 @@ public class Account {
 			}
 		}
 	}
-	
-	
 	
 }

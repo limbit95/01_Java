@@ -10,12 +10,12 @@ public class Array2PracticeRun {
 //		arr2Prac.practice2();
 //		arr2Prac.practice3();
 //		arr2Prac.practice4();
-//		arr2Prac.practice5();
+		arr2Prac.practice5();
 //		arr2Prac.practice6();
 //		arr2Prac.practice7();
 //		arr2Prac.practice8();
 //		arr2Prac.practice9();
-		arr2Prac.practice10();
+//		arr2Prac.practice10();
 		
 	}
 
