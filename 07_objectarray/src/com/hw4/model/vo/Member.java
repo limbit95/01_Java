@@ -12,7 +12,6 @@ public class Member {
 	public Member() {}
 	
 	public Member(String userId, String userPw, String name, int age, char gender, String email) {
-		super();
 		this.userId = userId;
 		this.userPw = userPw;
 		this.name = name;
@@ -22,7 +21,7 @@ public class Member {
 	}
 	
 	public String information() {
-		return "";
+		return "아이디 : " + userId + " | 이름 : " + name + " | 나이 : " + age + " | 성별 : " + gender + " | 이메일 : " + email;
 	}
 	
 	

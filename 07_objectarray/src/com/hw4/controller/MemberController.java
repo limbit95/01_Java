@@ -7,23 +7,18 @@ public class MemberController {
 	public static int SIZE = 10;
 	
 	private int memberCount = 0;
+
+	private Member[] mem = new Member[SIZE];
 	
-	private Member[] mem = new Member[memberCount];
+	{
+		mem[0] = new Member("user01", "pass01", "김유신", 20, 'M', "kim12@naver.com");
+		mem[1] = new Member("user02", "pass02", "이순신", 60, 'M', "lee2@naver.com");
+		mem[2] = new Member("user03", "pass03", "유관순", 17, 'F', "yo5@hanmail.net");
+		mem[3] = new Member("user04", "pass04", "연개소문", 57, 'M', "yeon@gmail.com");
+		mem[4] = new Member("user05", "pass05", "신사임당", 45, 'F', "shin@naver.com");
+		memberCount = 5;
+	}
 	
-	/*
-	+ getMemberCount() : int
-	+ getMem() : Member[]
-	+ checkId(userId:String) : Member
-	+ insertMember(m:Member) : void
-	+ searchMember(menu:int, search:String) : Member
-	+ updateMember(m:Member, menu:int, update:String) : void
-	+ deleteMember(userId:String) : void
-	+ sortIdAsc() : Member[]
-	+ sortIdDesc() : Member[]
-	+ sortAgeAsc() : Member[]
-	+ sortAgeDesc() : Member[]
-	+ sortGenderDesc() : Member[]
-	 */
 	
 	// memberCount 변수값 반환
 	public int getMemberCount() {
@@ -40,7 +35,7 @@ public class MemberController {
 		Member m = null;
 		
 		for(int i = 0; i < mem.length; i++) {
-			if(mem[i].getUserId().equals(userId)) {
+			if(mem[i] != null && mem[i].getUserId().equals(userId)) {
 				m = mem[i];
 				break;
 			} 
@@ -115,27 +110,97 @@ public class MemberController {
 	
 	// 객체배열 아이디별 오름차순 정렬 후 주소 값 반환
 	public Member[] sortIdAsc() {
+		Member copy[] = new Member[memberCount];
 		
+		System.arraycopy(mem, 0, copy, 0, memberCount);
+		
+		for(int i = 0; i < memberCount - 1; i++) {
+			for(int x = i + 1; x < memberCount; x++) {
+				Member temp = copy[i];
+				if(copy[i].getUserId().compareTo(copy[x].getUserId()) > 0) {
+					copy[i] = copy[x];
+					copy[x] = temp;
+				}
+			}
+		}
+		
+		return copy;
 	}
 	
 	// 객체배열 아이디별 내림차순 정렬 후 주소 값 반환
 	public Member[] sortIdDesc() {
+		Member copy[] = new Member[memberCount];
+				
+		System.arraycopy(mem, 0, copy, 0, memberCount);
 		
+		for(int i = 0; i < memberCount - 1; i++) {
+			for(int x = i + 1; x < memberCount; x++) {
+				Member temp = copy[i];
+				if(copy[i].getUserId().compareTo(copy[x].getUserId()) < 0) {
+					copy[i] = copy[x];
+					copy[x] = temp;
+				}
+			}
+		}
+		
+		return copy;
 	}
 	
 	// 객체배열 나이별 오름차순 정렬 후 주소 값 반환
 	public Member[] sortAgeAsc() {
+		Member copy[] = new Member[memberCount];
 		
+		System.arraycopy(mem, 0, copy, 0, memberCount);
+		
+		for(int i = 0; i < memberCount - 1; i++) {
+			for(int x = i + 1; x < memberCount; x++) {
+				Member temp = copy[i];
+				if(copy[i].getAge() > copy[x].getAge()) {
+					copy[i] = copy[x];
+					copy[x] = temp;
+				}
+			}
+		}
+		
+		return copy;
 	}
 	
 	// 객체배열 나이별 내림차순 정렬 후 주소 값 반환
 	public Member[] sortAgeDesc() {
+		Member copy[] = new Member[memberCount];
 		
+		System.arraycopy(mem, 0, copy, 0, memberCount);
+		
+		for(int i = 0; i < memberCount - 1; i++) {
+			for(int x = i + 1; x < memberCount; x++) {
+				Member temp = copy[i];
+				if(copy[i].getAge() < copy[x].getAge()) {
+					copy[i] = copy[x];
+					copy[x] = temp;
+				}
+			}
+		}
+		
+		return copy;
 	}
 	
 	// 객체배열 성별 내림차순 정렬 후 주소 값 반환
 	public Member[] sortGenderDesc() {
+		Member copy[] = new Member[memberCount];
 		
+		System.arraycopy(mem, 0, copy, 0, memberCount);
+		
+		for(int i = 0; i < memberCount - 1; i++) {
+			for(int x = i + 1; x < memberCount; x++) {
+				Member temp = copy[i];
+				if(String.valueOf(copy[i].getGender()).compareTo(String.valueOf(copy[x].getGender())) < 0) {
+					copy[i] = copy[x];
+					copy[x] = temp;
+				}
+			}
+		}
+		
+		return copy;
 	}
 	
 	
