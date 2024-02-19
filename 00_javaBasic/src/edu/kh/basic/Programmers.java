@@ -7,34 +7,39 @@ public class Programmers {
 	
 	public static void main(String[] args) {
 		
-		System.out.println(solution(new int[] {1, 2, 1, 4, 5, 2, 9}));
+		System.out.println(solution(new int[] {1, 2, 1, 2, 1, 10, 2, 1}));
 		
 		
 	}
 	
 	public static int[] solution(int[] arr) {
-        int[] answer = new int[5];
+		int[] answer = {};
         
-        boolean flag = false;
-        
-        int lastIdx = 0;
-        
-        int cnt = 0;
-        
+		int cnt = 0;
+		
         for(int i = 0; i < arr.length; i++) {
-        	for(int x = 0; x < arr.length; x++) {
-        		if(arr[x] == 2) {
-            		flag = true;
-            		lastIdx = x;
-            	} 
-        	}
-        	
-        	if(flag && i <= lastIdx) {
-        		answer[cnt] = arr[i];
+        	if(arr[i] == 2) {
         		cnt++;
         	}
         }
-        System.out.println(Arrays.toString(answer));
+        
+        int cnt2 = 0;
+        
+        if(cnt == 0 ) {
+        	answer = new int[] {-1};
+        } else if (cnt == 1) {
+        	answer = new int[] {2};
+        } else {
+        	for(int i = 0; i < arr.length; i++) {
+        		if(arr[i] == 2) {
+        			cnt2++;
+        		}
+        		
+        		if (cnt2 > 0 && cnt > 0) {
+        			
+        		}
+        	}
+        }
         
         return answer;
     }
