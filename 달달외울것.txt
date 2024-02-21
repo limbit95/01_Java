@@ -208,9 +208,56 @@ Comparator 클래스의 comparing 메서드를 통해 대입시키고 ex) -> Com
 참고로 사용자 정의 객체를 제외한 자바에서 제공하는 기본 자료형에는 Comparable과 Comparator가 이미 상속되어 있어
  해당 자료형들은 따로 상속받거나 클래스를 새로 대입하여 사용할 필요가 없다
 
-TreeSet : 정렬 기능 기본값임
+TreeSet : 정렬 기능이 기본값임
 
 Hash 라는 단어가 포함된 컬렉션 이용시 hashCode(), equals() 오버라이딩이 필수적으로 진행되어야 함
+
+Map : 키(key)와 값(value)으로 구성
+Map에 담겨있는 요소들을 순차적으로 접근하는 방법 2가지
+1. keySet() 이용하기 -> key를 담은 Set을 iterator
+2. entrySet() 이용하기 -> k:v를 담은 Set을 iterator
+키 타입은 hashCode와 equals()메소드가 재정의되어 있는 String타입을 주로 사용
+
+------------------------------------ Wrapper Class ------------------------------------ 
+HTML 연결 시(요청 데이터 처리) 많이 사용
+- HTML에 관련된 모든 값은 String
+단, char(Character)는 별도로 존재하지 않음
+
+byte b = Byte.parseByte("1");
+short s = Short.parseShort("2");
+int i = Integer.parseInt("3"); // 중요
+long l = Long.parseLong("4"); // 중요
+float f = Float.parseFloat("0.1");
+double d = Double.parseDouble("0.2"); // 중요
+boolean bool = Boolean.parseBoolean("true");
+
+String의 불변성(immutable, 변하지 않는 성질 == 상수)
+- 문자열이 수정되면 새로운 String 객체가 생성됨
+String temp1 = "hello";
+temp1 = "world";
+위의 경우 같은 변수명에서 값만 바뀌었지만 결국 값이 수정되면서 새로운 String 객체가 생성되기에 주소값을 확인해보면 다른 것을 확인할 수 있다
+
+String 리터럴("")로 객체를 생성한 경우 추가적으로 객체 생성하지 않고 기존에 존재하는 객체의 주소를 반환(재활용)함
+String temp1 = "Hello!!";
+String temp2 = "Hello!!"; 
+위의 두 객체의 참조 주소값은 같음
+
+new 연산자를 이용하여 생성하는 객체는 값이 같아도 참조주소값은 다르다
+"" 리터럴로 생성된 String -> 상수풀 (JVM 관리)
+new 연산자로 생성된 String -> Heap 영역 (사용자 관리)
+
+StringBuilder / StringBuffer : String의 불변성 문제를 해결한 클래스
+StringBuilder : Thread Safe 미제공 (비동기) -> 비동기화란? : 1번의 일이 시작했을 때 2번의 일을 시작할 준비를 하는 것
+- 멀티쓰레드 환경에서는 StringBuilder 사용 시 쓰레드 충돌 가능성 있음 -> 글자 깨지거나 오류 발생
+- 단일쓰레드 환경에서 유리
+StringBuffer : Thread Safe 제공 (동기) -> 동기화란? : 순서에 맞게 일을 진행할때 1번의 일이 마쳐지고 나서야 다음 순번의 일을 진행하는 것(진행하고 있는 일이 마쳐지기 전까지 다음 일 진행하지 않음)
+- 속도면에서는 StringBuilder 보다 성능 떨어짐
+- 멀티쓰레드 환경에서 안전하게 동작할 수 있음
+
+java언어의 특징은 멀티쓰레드 지원 : new Tread(); 사용하는 순간부터 지원
+
+main 메서드가 쓰레드 한 개이므로 main메서드를 사용할 때는 단일 쓰레드 환경으로서 StringBuilder 사용 추천
+
 
 
 
@@ -220,5 +267,3 @@ ctrl + shift + O : import 안 된 모든 클래스 import
 alt + shift + s : getter, setter 생성 단축키
 alt + shift + j : 메서드 설명용 주석
 ------------------------------------ 질문 ------------------------------------ 
-
-알고리즘 문제 주어진 배열로 푸는 게 학습에 더 도움되는 건지

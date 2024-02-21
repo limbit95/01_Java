@@ -19,7 +19,7 @@ public class Student implements Comparable<Student> {
 		this.gender = gender;
 		this.score = score;
 	}
-
+ 
 	@Override
 	public String toString() {
 		return "이름 : " + name + " | 나이 : " + age + " | 지역 : " + region + " | 성별 : " + gender + " | 점수 : " + score;

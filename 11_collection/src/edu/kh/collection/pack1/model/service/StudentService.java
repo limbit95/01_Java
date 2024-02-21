@@ -335,7 +335,7 @@ System.out.println("========== 이름으로 검색(일부 일치) ==========");
 		for(Student std : studentList) {
 			System.out.println(std);
 		}
-	}
+	} 
 	
 	// 이름에 따라 정렬
 	public void sortByName() {
