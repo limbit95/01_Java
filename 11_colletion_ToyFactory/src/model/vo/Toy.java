@@ -14,18 +14,37 @@ public class Toy implements Comparable<Toy>{
 	private int price;
 	private String toyColor;
 	private int since;
+	private Set<String> setMaterial;
+	
 	private String material;
 
 	public Toy() {}
 	
-	public Toy(String toyName, int useAge, int price, String toyColor, int since, Set<String> material) {
+	public Toy(String toyName, int useAge, int price, String toyColor, int since, Set<String> setMaterial) {
 		super();
 		this.toyName = toyName;
 		this.useAge = useAge;
 		this.price = price;
 		this.toyColor = toyColor;
 		this.since = since;
-		this.material = material.toString();
+		this.setMaterial = setMaterial;
+		materialToString();
+	}
+	
+	
+
+	public void materialToString() {
+		String tempMaterial = "";
+//		
+		for(String m : setMaterial) {
+			if(tempMaterial.length() == 0) {
+				tempMaterial += m;
+			} else {
+				tempMaterial += ", " + m;
+			}
+		}
+		
+		this.material = tempMaterial;
 	}
 
 
@@ -73,6 +92,12 @@ public class Toy implements Comparable<Toy>{
 	public void setSince(int since) {
 		this.since = since;
 	}
+	public Set<String> getSetMaterial() {
+		return setMaterial;
+	}
+	public void setSetMaterial(Set<String> setMaterial) {
+		this.setMaterial = setMaterial;
+	}
 	public String getMaterial() {
 		return material;
 	}
@@ -80,20 +105,19 @@ public class Toy implements Comparable<Toy>{
 		this.material = material;
 	}
 
-
-	// 장난감 객체
-	public Map<String, Object> createToy() {
-		
-		Map<String, Object> toy = new HashMap<String, Object>();
-		
-		toy.put("장난감 이름", toyName);
-		toy.put("사용연령", useAge);
-		toy.put("가격", price);
-		toy.put("색상", toyColor);
-		toy.put("제조년월일", since);
-		toy.put("사용재료", material);
-		
-		return toy;
-	}
+//	// 장난감 객체
+//	public Map<String, Object> createToy() {
+//		
+//		Map<String, Object> toy = new HashMap<String, Object>();
+//		
+//		toy.put("장난감 이름", toyName);
+//		toy.put("사용연령", useAge);
+//		toy.put("가격", price);
+//		toy.put("색상", toyColor);
+//		toy.put("제조년월일", since);
+//		toy.put("사용재료", material);
+//		
+//		return toy;
+//	}
 	
 }

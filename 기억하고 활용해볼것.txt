@@ -1,0 +1,16 @@
+Map.putIfAbsent(age, new ArrayList<>());
+putIfAbsent() : Map 인터페이스에서 제공되는 메서드로,
+해당 키가 존재하지 않는 경우에만 전달받은 값을 추가함.
+-> 맵에 해당 연령의 리스트가 없는 경우에만 새로운 리스트를 생성하여 추가
+
+<Comparator.comparing을 이용한 기준대로 정렬하기>
+toyListSortedByDate.sort(Comparator.comparing(Toy_2::getSince));
+
+Map.entrySet() 적극 사용하기 
+Map.containsKey() 사용하기
+
+매개변 개수 가변 코드 활용
+(자료형...변수명) ->점 세 개
+
+try - catch 문 활용하여 throws Exception 활용하기
+
