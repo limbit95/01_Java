@@ -2,13 +2,14 @@ package edu.kh.basic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Programmers {
 	
 	public static void main(String[] args) {
 		
 		System.out.println(solution(new int[] {1, 2, 1, 2, 1, 10, 2, 1}));
-		
 		
 	}
 	
