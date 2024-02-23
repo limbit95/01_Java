@@ -76,5 +76,13 @@ public class TodoListDAOImpl implements TodoListDAO {
 		return todoList;
 	}
 	
+	@Override
+	public void todoAdd() {
+		todoList.add(new Todo());
+		// 새롭게 추가한 Todo를 전달하는 값이 있어야 함
+	}
+	
+	
+	
 	
 }

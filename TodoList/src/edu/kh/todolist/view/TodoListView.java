@@ -135,6 +135,8 @@ public class TodoListView {
 	
 	
 	public void todoAdd() {
+		System.out.println("\\n==========[3. Todo Add]==========");
+		
 		
 	}
 	

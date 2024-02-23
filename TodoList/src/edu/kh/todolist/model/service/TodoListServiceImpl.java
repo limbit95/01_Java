@@ -68,6 +68,10 @@ public class TodoListServiceImpl implements TodoListService {
 		return formattedDateTime;
 	}
 	
+	@Override
+	public void todoAdd() {
+		dao.todoAdd();
+	}
 	
 	
 }

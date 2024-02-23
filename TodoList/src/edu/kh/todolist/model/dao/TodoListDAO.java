@@ -9,5 +9,5 @@ public interface TodoListDAO {
 	 */
 	List<Todo> todoListFullView();
 
-	
+	void todoAdd();
 }
