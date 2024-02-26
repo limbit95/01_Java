@@ -13,15 +13,9 @@ public class Run {
 		
 //		service.method1();
 //		service.method2();
-//		service.method3();
+		service.method3();
 //		service.method4();
 //		service.lottoNumberGenerator();
-		
-		List list = new ArrayList();
-		
-		list.add(1);
-		System.out.println(list);
-		
 		
 	}	
 }

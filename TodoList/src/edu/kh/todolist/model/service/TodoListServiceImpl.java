@@ -68,9 +68,60 @@ public class TodoListServiceImpl implements TodoListService {
 		return formattedDateTime;
 	}
 	
+	// 할 일 상세 조회 서비스
 	@Override
-	public void todoAdd() {
-		dao.todoAdd();
+	public String todoDetailView(int idx) {
+		Todo todo = dao.todoDetailView(idx);
+		
+		if(todo == null) return null;
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("\n-----------------------------------\n");
+		
+		sb.append(String.format("제목 : %s\n", todo.getTitle()));
+		sb.append(String.format("등록일 : %s\n", dateFormat(todo.getRegDate() )));
+		sb.append(String.format("완료여부 : %s\n" , todo.isComplete() ? "O" : "X"));
+		sb.append(String.format("\n[세부 내용]\n"));
+		sb.append("-----------------------------------\n");
+		sb.append(String.format("%s\n" , todo.getDetail()));
+		
+		return sb.toString();
+	}
+	
+	// 할 일 추가 서비스
+	@Override
+	public int todoAdd(String title, String content) throws Exception {
+		Todo todo = new Todo(title, content, false, LocalDateTime.now());
+		
+		// DAO 메서드 호출 후 결과 변환 받기
+		int index = dao.todoAdd(todo);
+		
+		return index;
+	}
+
+	// 할 일 완료 여부 서비스
+	// Service 메서드가 별도 처리를 하는게 없음
+	// -> 아무것도 안한다고 해서 서비스를 사용하지 않으면 안됨
+	@Override
+	public boolean todoComplete(int idx) throws Exception {
+		return dao.todoComplete(idx);
+	}
+
+	// 할 일 수정 서비스
+	@Override
+	public boolean todoUpdate(int index, String title, String content) throws Exception {
+		return dao.todoUpdate(index, title, content);
+	}
+
+	// 할 일 삭제 서비스
+	@Override
+	public String todoDelete(int index) throws Exception {
+		Todo todo = dao.todoDelete(index);
+		
+		if(todo == null) return null;
+		
+		return todo.getTitle();
 	}
 	
 	
