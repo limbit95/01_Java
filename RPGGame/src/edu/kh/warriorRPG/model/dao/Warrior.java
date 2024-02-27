@@ -3,6 +3,7 @@ package edu.kh.warriorRPG.model.dao;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Warrior implements Serializable {
 
@@ -11,7 +12,7 @@ public class Warrior implements Serializable {
 	private int exp; // 경험치
 	private int hp; // 체력
 	private int strength; // 공격력
-	private String attackEquip; // 장착 무기
+	private Weapon attackEquip; // 장착 무기
 	private int stat; // 스탯포인트
 	private Map<String, Integer> potion; // 물약 주머니
 	private int gold; // 돈
@@ -25,23 +26,55 @@ public class Warrior implements Serializable {
 		this.exp = 0;
 		this.hp = 100;
 		this.strength = 5;
-		this.attackEquip = "맨손";
+		this.attackEquip = new Weapon("맨", "주먹", 3, 1, 0);
 		this.stat = 0;
-		this.potion = new HashMap<String, Integer>();
-		this.gold = 0;
+		this.potion = new TreeMap<String, Integer>();
 		{
 			potion.put("하급 물약", 3);
 			potion.put("중급 물약", 0);
 			potion.put("상급 물약", 0);
 		}
+		this.gold = 10;
 	}
 
+	// 골드 차감 메서드
+	public boolean minusGold(int amount) {
+		if(gold < amount) {
+			return false;
+		}
+		
+		gold -= amount;
+		return true;
+	}
+	
+	// 공격받은 수만큼 hp에서 차감 메서드
+	public boolean minusHp(int attack) {
+		if(hp < attack) {
+			hp = 0;
+			return false;
+		}
+		
+		hp -= attack;
+		return true;
+	}
 	
 
+	
 	@Override
 	public String toString() {
-		return "Warrior [name=" + name + ", level=" + level + ", exp=" + exp + ", hp=" + hp + ", strength=" + strength
-				+ ", attackEquip=" + attackEquip + ", stat=" + stat + ", potion=" + potion + ", gold=" + gold + "]";
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(String.format("\n*** " +  name + "의 상태창 ***")).append("\n");
+		sb.append(String.format("레벨 : " +  level)).append("\n");
+		sb.append(String.format("경험치 : " +  exp)).append("\n");
+		sb.append(String.format("체력 : " +  hp)).append("\n");
+		sb.append(String.format("공격력 : " +  (strength + attackEquip.getAttack()))).append("\n");
+		sb.append(String.format("장비(무기) : " +  attackEquip)).append("\n");
+		sb.append(String.format("스탯포인트 : " +  stat)).append("\n");
+		sb.append(String.format("골드 : " +  gold)).append("\n");
+		sb.append(String.format("아이템(물약) : " +  potion)).append("\n");
+		
+		return sb.toString();
 	}
 
 	
@@ -76,10 +109,10 @@ public class Warrior implements Serializable {
 	public void setStrength(int strength) {
 		this.strength = strength;
 	}
-	public String getAttackEquip() {
+	public Weapon getAttackEquip() {
 		return attackEquip;
 	}
-	public void setAttackEquip(String attackEquip) {
+	public void setAttackEquip(Weapon attackEquip) {
 		this.attackEquip = attackEquip;
 	}
 	public int getStat() {

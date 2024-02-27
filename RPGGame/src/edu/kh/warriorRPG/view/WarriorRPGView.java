@@ -13,6 +13,7 @@ public class WarriorRPGView {
 
 	private BufferedReader br = null;
 	private WarriorRPGService service = null;
+	private GamePlayView gamePlayView = null;
 	
 	public WarriorRPGView() {
 		try {
@@ -35,8 +36,8 @@ public class WarriorRPGView {
 				case 2: createWarrior(); break;
 				case 3: showWarrior(); break;
 				case 4: deleteWarrior(); break;
-				case 0: System.out.println("게임을 종료합니다.") ;break;
-				default: System.out.println("잘못된 입력하셨습니다."); break;
+				case 0: System.out.println("프로그램을 종료합니다.") ;break;
+				default: System.out.println("잘못 입력하셨습니다."); break;
 				}
 				System.out.println("\n================================\n");
 			} catch (NumberFormatException e) {
@@ -81,6 +82,7 @@ public class WarriorRPGView {
 				createWarrior();
 				System.out.println();
 			} else {
+				System.out.println("\n*** 생성 취소 ***");
 				return;
 			}
 		}
@@ -93,7 +95,11 @@ public class WarriorRPGView {
 		
 		if(index == 0) return;
 		
+		Warrior warrior = service.selectWarrior(index);
 		
+		gamePlayView = new GamePlayView(warrior);
+		
+		gamePlayView.play();
 	}
 	
 	
@@ -129,13 +135,13 @@ public class WarriorRPGView {
 		
 		if(index == 0) return;
 		
-		String detailWarrior = service.detailWarrior(index);
+		Warrior warrior = service.detailWarrior(index);
 		
-		if(detailWarrior == null) {
+		if(warrior == null) {
 			System.out.println("### 입력한 인덱스 번호가 존재하지 않습니다 ###");
 			return;
 		}
-		System.out.println(detailWarrior);
+		System.out.println(warrior);
 	}
 	
 	// 4. 캐릭터 삭제

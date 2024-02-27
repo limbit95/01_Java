@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+import edu.kh.warriorRPG.model.dao.Potion;
 import edu.kh.warriorRPG.model.dao.Warrior;
 import edu.kh.warriorRPG.model.dao.WarriorDAO;
 import edu.kh.warriorRPG.model.dao.WarriorDAOImpl;
@@ -26,11 +27,11 @@ public class WarriorRPGServiceImpl implements WarriorRPGService{
 
 	
 	/**
-	 * 캐릭터 선택창
+	 * 캐릭터 리스트 불러오기
 	 */
 	@Override
 	public String warriorList() {
-		List<Warrior> warriorList = wdao.selectWarrior();
+		List<Warrior> warriorList = wdao.warriorList();
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -52,27 +53,19 @@ public class WarriorRPGServiceImpl implements WarriorRPGService{
 	 * 캐릭터 상세정보
 	 */
 	@Override
-	public String detailWarrior(int index) {
+	public Warrior detailWarrior(int index) {
 		Warrior warrior = wdao.detailWarrior(index-1);
 		
 		if(warrior == null) {
 			return null;
 		}
 		
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append(String.format("\n*** " +  warrior.getName())).append("\n");
-		sb.append(String.format("레벨 : " +  warrior.getLevel())).append("\n");
-		sb.append(String.format("경험치 : " +  warrior.getExp())).append("\n");
-		sb.append(String.format("체력 : " +  warrior.getHp())).append("\n");
-		sb.append(String.format("공격력 : " +  warrior.getStrength())).append("\n");
-		sb.append(String.format("장비(무기) : " +  warrior.getAttackEquip())).append("\n");
-		sb.append(String.format("스탯포인트 : " +  warrior.getStat())).append("\n");
-		sb.append(String.format("아이템(물약) : " +  warrior.getPotion())).append("\n");
-		
-		return sb.toString();		
+		return warrior;		
 	}
 
+	/**
+	 * 캐릭터 삭제
+	 */
 	@Override
 	public String deleteWarrior(int index) throws Exception {
 		Warrior warrior = wdao.deleteWarrior(index-1);
@@ -81,6 +74,29 @@ public class WarriorRPGServiceImpl implements WarriorRPGService{
 		
 		return warrior.getName();
 	}
+
+	/**
+	 * 캐릭터 선택
+	 */
+	@Override
+	public Warrior selectWarrior(int index) {
+		return wdao.selectWarrior(index);
+	}
+
+	/**
+	 * 게임 저장
+	 */
+	@Override
+	public Warrior save(Warrior warrior) throws Exception {
+		Warrior savedWarrior = wdao.save(warrior);
+		
+		if(savedWarrior == null) return null; 
+		
+		
+		return savedWarrior;
+	}
+
+	
 	
 	
 	

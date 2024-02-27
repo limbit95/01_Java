@@ -77,7 +77,7 @@ public class WarriorDAOImpl implements WarriorDAO {
 	}
 
 	/**
-	 * 캐릭터 선택창
+	 * 캐릭터 리스트 불러오기
 	 */
 	@Override
 	public List<Warrior> warriorList() {
@@ -87,6 +87,9 @@ public class WarriorDAOImpl implements WarriorDAO {
 		return warriorList;
 	}
 
+	/**
+	 * 캐릭터 상세보기
+	 */
 	@Override
 	public Warrior detailWarrior(int index) {
 		if((index) < 0 || (index) >= warriorList.size()) {
@@ -95,6 +98,9 @@ public class WarriorDAOImpl implements WarriorDAO {
 		return warriorList.get(index);
 	}
 
+	/**
+	 * 캐릭터 삭제
+	 */
 	@Override
 	public Warrior deleteWarrior(int index) throws Exception{
 		if((index) < 0 || (index) >= warriorList.size()) {
@@ -107,6 +113,30 @@ public class WarriorDAOImpl implements WarriorDAO {
 		
 		return warrior;
 	}
+
+	/**
+	 * 캐릭터 선택
+	 */
+	@Override
+	public Warrior selectWarrior(int index) {
+		return warriorList.get(index-1);
+	}
+
+	@Override
+	public Warrior save(Warrior warrior) throws Exception {
+		Warrior savedWarrior = null;
+		
+		for(int i = 0; i < warriorList.size(); i++) {
+			if(warriorList.get(i).getName().equals(warrior.getName())) {
+				warriorList.set(i, warrior);
+				saveFile();
+				savedWarrior = warrior;
+			}
+		}
+		return savedWarrior;
+	}
+
+	
 	
 	
 	
