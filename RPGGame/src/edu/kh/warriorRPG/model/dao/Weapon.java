@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class Weapon implements Serializable {
 	
-	private String name;
-	private String kind;
-	private int attack;
-	private int avaliableLevel;
-	private int price;
+	private String name; // 이름 
+	private String kind; // 타입 - 검, 도끼 등
+	private int attack; // 공격력
+	private int avaliableLevel; // 사용 가능한 레벨
+	private int price; // 가격
 	
 	public Weapon() {}
 

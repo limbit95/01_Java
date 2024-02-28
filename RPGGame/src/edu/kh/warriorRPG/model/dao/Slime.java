@@ -10,8 +10,9 @@ public class Slime {
 	private int level;
 	private int hp;
 	private int attack;
-	private int gold;
-	private int exp;
+	private int gold; // 죽었을 때 드랍 골드
+	private int exp; // 죽었을 때 제공 경험치
+	private boolean isAlive; // 사망여부
 	
 	private Random random = new Random();
 	
@@ -34,17 +35,27 @@ public class Slime {
 		this.attack = (level * 2);
 		this.gold = 1 + (level * 2);
 		this.exp = level * 3;
+		this.isAlive = true;
 	}
 
 	
-	public boolean minusHp(int attack) {
-		if(hp <= attack) {
+	// 공격 메서드
+	public void attack(Warrior warrior) {
+		System.out.println("### " + name + " 공격 ###");
+	}
+	
+	// 받은 피해 처리 메서드
+	public void damaged(Warrior warrior) {
+		if(hp < (warrior.getAttack() + warrior.getAttackEquip().getAttack())) {
 			hp = 0;
-			return false;
+			isAlive = false;
+			System.out.println(name + "의 체력 : [" + hp + "]\n");
+			return;
 		}
 		
-		hp -= attack;
-		return true;
+		hp -= (warrior.getAttack() + warrior.getAttackEquip().getAttack());
+		System.out.println(name + "의 체력 : [" + hp + "]\n");
+		return;
 	}
 	
 	
@@ -102,6 +113,12 @@ public class Slime {
 	}
 	public void setKind(List<String> kind) {
 		this.kind = kind;
+	}
+	public boolean isAlive() {
+		return isAlive;
+	}
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
 	}
 	
 }

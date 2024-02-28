@@ -1,7 +1,10 @@
 package edu.kh.warriorRPG.model.dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -10,12 +13,15 @@ public class Warrior implements Serializable {
 	private String name; // 이름
 	private int level; // 레벨
 	private int exp; // 경험치
+	private int max_hp; // 최대 체력
 	private int hp; // 체력
-	private int strength; // 공격력
+	private int attack; // 공격력
 	private Weapon attackEquip; // 장착 무기
 	private int stat; // 스탯포인트
 	private Map<String, Integer> potion; // 물약 주머니
 	private int gold; // 돈
+	private boolean isAlive; // 사망여부
+	private List<Weapon> weaponList; // 보유 무기 리스트
 	
 	public Warrior() {}
 	
@@ -24,8 +30,9 @@ public class Warrior implements Serializable {
 		this.name = name;
 		this.level = 1;
 		this.exp = 0;
-		this.hp = 100;
-		this.strength = 5;
+		this.max_hp = 100;
+		this.hp = max_hp;
+		this.attack = 5;
 		this.attackEquip = new Weapon("맨", "주먹", 3, 1, 0);
 		this.stat = 0;
 		this.potion = new TreeMap<String, Integer>();
@@ -35,6 +42,8 @@ public class Warrior implements Serializable {
 			potion.put("상급 물약", 0);
 		}
 		this.gold = 10;
+		this.isAlive = true;
+		this.weaponList = new ArrayList<Weapon>();
 	}
 
 	// 골드 차감 메서드
@@ -47,16 +56,71 @@ public class Warrior implements Serializable {
 		return true;
 	}
 	
-	// 공격받은 수만큼 hp에서 차감 메서드
-	public boolean minusHp(int attack) {
-		if(hp < attack) {
+	
+	// 공격 메서드
+	public void attack(Slime slime) {
+		System.out.println("### " + name + " 공격 ###");
+		System.out.println(slime.getName() + "에게 " + attackEquip.getName() + " " + attackEquip.getKind()
+				+ "을 휘둘러 [" + (attack + attackEquip.getAttack()) + "]만큼의 데미지를 주었다!");
+	}
+	
+	
+	// 받은 피해 처리 메서드
+	public void damaged(Slime slime) {
+		if(hp < slime.getAttack()) {
 			hp = 0;
-			return false;
+			exp -= 10;
+			if(exp < 0) {
+				exp = 0;
+			}
+			isAlive = false;
+			System.out.println("[" + slime.getAttack() + "]만큼의 데미지를 입었습니다.");
+			System.out.println(name + "의 체력 : [" + hp + "]\n");
+			return;
 		}
 		
 		hp -= attack;
-		return true;
+		System.out.println("[" + slime.getAttack() + "]만큼의 데미지를 입었습니다.");
+		System.out.println(name + "의 체력 : [" + hp + "]\n");
+		return;
 	}
+	
+
+	
+	// 해당 캐릭터의 상태 검사 후
+	// - 경험치가 100 이상이면 캐릭터.경험치 -= 100, 캐릭터.레벨 += 1, 캐릭터.스탯 +1
+	public void statusUp() {
+		if(exp >= 100) {
+			exp -= 100;
+			level += 1;
+			stat += 1;
+			System.out.println("축하합니다! 1레벨업 되셨습니다!!!\n");
+		} 
+	}
+	
+	
+	
+	// 체력 증가 
+	public void maxHpUp() {
+		if(stat > 0) {
+			System.out.println("체력이 [10] 증가하였습니다.");
+			max_hp += 10;
+			stat--;
+		} else {
+			System.out.println("스탯 포인트가 부족합니다.");
+		}
+	}
+	// 공격력 증가
+	public void attackUp() {
+		if(stat > 0) {
+			System.out.println("공격력이 [3] 증가하였습니다.");
+			attack += 3;
+			stat--;
+		} else {
+			System.out.println("스탯 포인트가 부족합니다.");
+		}
+	}
+	
 	
 
 	
@@ -67,12 +131,13 @@ public class Warrior implements Serializable {
 		sb.append(String.format("\n*** " +  name + "의 상태창 ***")).append("\n");
 		sb.append(String.format("레벨 : " +  level)).append("\n");
 		sb.append(String.format("경험치 : " +  exp)).append("\n");
-		sb.append(String.format("체력 : " +  hp)).append("\n");
-		sb.append(String.format("공격력 : " +  (strength + attackEquip.getAttack()))).append("\n");
+		sb.append(String.format("체력 : " +  hp + "/" + max_hp)).append("\n");
+		sb.append(String.format("공격력 : " + attack  + "[+" + (attackEquip.getAttack()) + "]")).append("\n");
 		sb.append(String.format("장비(무기) : " +  attackEquip)).append("\n");
 		sb.append(String.format("스탯포인트 : " +  stat)).append("\n");
 		sb.append(String.format("골드 : " +  gold)).append("\n");
 		sb.append(String.format("아이템(물약) : " +  potion)).append("\n");
+		sb.append(String.format("생존여부 : " + (isAlive ? "생존" : "사망"))).append("\n");
 		
 		return sb.toString();
 	}
@@ -97,17 +162,23 @@ public class Warrior implements Serializable {
 	public void setExp(int exp) {
 		this.exp = exp;
 	}
+	public int getMax_hp() {
+		return max_hp;
+	}
+	public void setMax_hp(int max_hp) {
+		this.max_hp = max_hp;
+	}
 	public int getHp() {
 		return hp;
 	}
 	public void setHp(int hp) {
 		this.hp = hp;
 	}
-	public int getStrength() {
-		return strength;
+	public int getAttack() {
+		return attack;
 	}
-	public void setStrength(int strength) {
-		this.strength = strength;
+	public void setAttack(int attack) {
+		this.attack = attack;
 	}
 	public Weapon getAttackEquip() {
 		return attackEquip;
@@ -133,5 +204,17 @@ public class Warrior implements Serializable {
 	public void setGold(int gold) {
 		this.gold = gold;
 	}
-	
+	public boolean isAlive() {
+		return isAlive;
+	}
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
+	}
+	public List<Weapon> getWeaponList() {
+		return weaponList;
+	}
+	public void setWeaponList(List<Weapon> weaponList) {
+		this.weaponList = weaponList;
+	}
+
 }

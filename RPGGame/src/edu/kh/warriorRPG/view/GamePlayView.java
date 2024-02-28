@@ -23,6 +23,8 @@ public class GamePlayView {
 	private Warrior warrior = null; // 플레이어 
 	private BufferedReader br = null;
 	private WarriorRPGService service = null;
+	private WarriorStatusView warriorStatusView = null;
+	
 	
 	private Map<Integer, Weapon> weaponShop = new TreeMap<Integer, Weapon>();
 	{
@@ -33,7 +35,7 @@ public class GamePlayView {
 	
 	private Map<Integer, Potion> potionShop = new TreeMap<Integer, Potion>();
 	{
-		potionShop.put(1, new Potion("하급 물약", 10, 10));
+		potionShop.put(1, new Potion("하급 물약", 5, 10));
 		potionShop.put(2, new Potion("중급 물약", 50, 50));
 		potionShop.put(3, new Potion("상급 물약", 100, 100));
 	}
@@ -136,7 +138,7 @@ public class GamePlayView {
 			case 2: goblinDungeon(); break;
 			case 3: orcDungeon(); break;
 			case 0: break;
-			default: System.out.println("잘못 입력하셨습니다."); break;
+			default: System.out.println("잘못 입력하셨습니다."); input = -1; break;
 			}
 		} while(input != 0);
 	}
@@ -165,12 +167,9 @@ public class GamePlayView {
 				return;
 			} else {
 				System.out.println("\n*** " + weapon.getName() + " " + weapon.getKind() + "을 구매하셨습니다 ***");
-				
+				warrior.getWeaponList().add(weapon);
+				System.out.println("\n*** 무기 인벤토리에 [" + weapon.getName() + " " + weapon.getKind() + "] 이(가) 추가 되었습니다 ***");
 			}
-			
-			warrior.setAttackEquip(weapon);
-			
-			System.out.println("\n현재 장착 무기 : " + warrior.getAttackEquip());
 		} 
 	
 	// 3. 물약 상점
@@ -208,8 +207,34 @@ public class GamePlayView {
 	}
 	
 	// 3. 캐릭터 상태
-	public void warriorInfo() {
-		System.out.println(warrior);
+	public void warriorInfo() throws Exception {
+		int input = -1;
+		
+		while(true){
+			System.out.println(warrior);
+			
+			System.out.println("1. 능력치 추가");
+			System.out.println("2. 무기 인벤토리");
+			System.out.println("3. 물약 사용");
+			System.out.println("0. 이전 메뉴로 돌아가기\n");
+			
+			System.out.print("선택 : ");
+			input = Integer.parseInt(br.readLine());
+			
+			if(input == 0) {
+				break;
+			}
+			
+			warriorStatusView = new WarriorStatusView(warrior);
+			
+			switch(input) {
+				case 1: warriorStatusView.addAbility(); break;
+				case 2: warriorStatusView.updateWeapon(); break;
+				case 3: warriorStatusView.usePotion(); break;
+				default: System.out.println("잘못 입력하셨습니다."); input = -1; break;
+			}
+		} 
+		
 	}
 	
 	// 4. 게임 저장
@@ -225,10 +250,10 @@ public class GamePlayView {
 
 	// 슬라임 던전
 	public void slimeDungeon() throws Exception {
-		if(warrior.getHp() == 0) {
-			System.out.println("\n캐릭터가 사망한 상태입니다.");
+		if(!warrior.isAlive()) {
+			System.out.println("\n캐릭터가 사망한 상태입니다.\n");
 			return;
-		}
+		} 
 		
 		System.out.println("\n========== 슬라임 던전 =========\n");
 		
@@ -239,54 +264,50 @@ public class GamePlayView {
 		System.out.print("전투를 시작하시겠습니까?(y/(도망치려면 아무키나) : ");
 		String answer = br.readLine().toLowerCase();
 		
-		
 		if(answer.equals("y")) {
 			System.out.println("\n@@@ 전투를 시작합니다 @@@\n");
-			while(slime.getHp() > 0) {
+			
+			while(true) {
 				
+				warrior.attack(slime);
+				slime.damaged(warrior);	
 				
-				System.out.println(slime.getName() + "에게 " + warrior.getAttackEquip().getName() + " " + warrior.getAttackEquip().getKind()
-								+ "을 휘둘러 " + (warrior.getStrength() + warrior.getAttackEquip().getAttack()) + "만큼의 데미지를 주었다!");
-
-				if(!slime.minusHp((warrior.getStrength() + warrior.getAttackEquip().getAttack()))){
-					break;
-				} else {
-					System.out.println(slime.getName() + "의 체력 : [" + slime.getHp() + "]\n");
+				if(!slime.isAlive()) {
+					System.out.println(slime.getName() + "을 처치하였다!");
+					System.out.println(slime.getExp() + "만큼의 경험치를 얻었다!");
+					System.out.println(slime.getGold() + "만큼의 골드를 얻었다!\n");
+					warrior.setExp(warrior.getExp() + slime.getExp());
+					warrior.setGold(warrior.getGold() + slime.getGold());
+					
+					// 
+					warrior.statusUp();
+					
+					return;
 				}
-//				slime.minusHp((warrior.getStrength() + warrior.getAttackEquip().getAttack()));
 				
+				slime.attack(warrior);
+				warrior.damaged(slime);
 				
-				System.out.println(slime.getName() + "의 공격으로 " + warrior.getName() + "은(는) " + slime.getAttack() + "만큼의 피해를 받았다!");
-				warrior.setHp(warrior.getHp() - slime.getAttack());
-				System.out.println(warrior.getName() + "의 체력 : [" + warrior.getHp() + "]\n");
+				if(!warrior.isAlive()) {
+					System.out.println("### 캐릭터가 사망하였습니다 ###");
+					System.out.println("### 경험치가 하락하였습니다 ###");
+					System.out.println("\n마을로 돌아갑니다.\n");
+					return;
+				}
 			}
 			
-			System.out.println(slime.getName() + "의 체력 : [" + slime.getHp() + "]\n");
-			
-			System.out.println(slime.getName() + "을 처치하였다!");
-			System.out.println(slime.getExp() + "만큼의 경험치를 얻었다!");
-			System.out.println(slime.getGold() + "만큼의 골드를 얻었다!");
-			warrior.setExp(warrior.getExp() + slime.getExp());
-			warrior.setGold(warrior.getGold() + slime.getGold());
-			System.out.println("\n마을로 돌아갑니다.");
-			
-			return;
 		} else {
 			System.out.println("\n" + slime.getName() + "과의 전투에서 도망쳤습니다.");
 			System.out.println("패널티로 " + slime.getName() + "에게 한 번의 공격을 허용합니다.\n");
-			if(!warrior.minusHp(slime.getAttack())){
-				System.out.println("캐릭터가 사망하였습니다.");
+			warrior.damaged(slime);
+			if(!warrior.isAlive()){
+				System.out.println("### 캐릭터가 사망하였습니다 ###");
+				System.out.println("### 경험치가 하락하였습니다 ###");
 				return;
 			} else {
-				System.out.println("[" + slime.getAttack() + "] 만큼의 데미지를 입었습니다. "
-								+ "\n현재 체력 : [" + warrior.getHp() + "]\n");
 				return;
 			}
 		} 
-		
-		
-		
-		
 	}
 	
 	// 고블린 던전
