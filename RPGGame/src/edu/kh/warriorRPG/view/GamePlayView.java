@@ -28,9 +28,9 @@ public class GamePlayView {
 	
 	private Map<Integer, Weapon> weaponShop = new TreeMap<Integer, Weapon>();
 	{
-		weaponShop.put(1, new Weapon("기본", "검", 10, 3, 20));
-		weaponShop.put(2, new Weapon("묵직한", "몽둥이", 20, 5, 100));
-		weaponShop.put(3, new Weapon("피비린내 나는", "검", 30, 8, 300));
+		weaponShop.put(1, new Weapon("기본", "검", 10, 2, 20));
+		weaponShop.put(2, new Weapon("묵직한", "몽둥이", 20, 3, 100));
+		weaponShop.put(3, new Weapon("피비린내 나는", "검", 30, 5, 300));
 	}
 	
 	private Map<Integer, Potion> potionShop = new TreeMap<Integer, Potion>();
@@ -76,8 +76,8 @@ public class GamePlayView {
 				case 3: potionShop(); break;
 				case 4: warriorInfo(); break;
 				case 5: save(); break;
-				case 0: System.out.println("게임을 종료합니다.") ;break;
-				default: System.out.println("잘못 입력하셨습니다."); break;
+				case 0: ;break;
+//				default: System.out.println("잘못 입력하셨습니다."); break;
 				}
 				System.out.println("\n================================\n");
 			} catch (NumberFormatException e) {
@@ -109,9 +109,17 @@ public class GamePlayView {
 		
 		if(input == 0) {
 			System.out.println("게임 저장하셨습니까?");
-			System.out.print("저장하지 않고 나가시면 현재까지 진행된 모든 데이터는 손실됩니다.(y/n) : ");
 			
+			System.out.print("저장하지 않고 나가시면 현재까지 진행된 모든 데이터는 손실됩니다.(y/취소하려면 아무키나) : ");
+			String str = br.readLine().toLowerCase();
 			
+			if(str.equals("y")) {
+				System.out.println("\n게임을 종료합니다.");
+				return input;
+			} else {
+				System.out.println("\n게임 종료를 취소합니다.");
+				return -1;
+			}
 		}
 		
 		return input;
@@ -162,14 +170,7 @@ public class GamePlayView {
 			
 			Weapon weapon = weaponShop.get(input);
 			
-			if(!warrior.minusGold(weapon.getPrice())) {
-				System.out.println("\n### 골드가 부족합니다 ###");
-				return;
-			} else {
-				System.out.println("\n*** " + weapon.getName() + " " + weapon.getKind() + "을 구매하셨습니다 ***");
-				warrior.getWeaponList().add(weapon);
-				System.out.println("\n*** 무기 인벤토리에 [" + weapon.getName() + " " + weapon.getKind() + "] 이(가) 추가 되었습니다 ***");
-			}
+			warrior.minusGold(weapon.getPrice(), weapon);
 		} 
 	
 	// 3. 물약 상점
@@ -191,16 +192,7 @@ public class GamePlayView {
 		
 		Potion potion = potionShop.get(input);
 		
-		if(!warrior.minusGold(potion.getPrice())) {
-			System.out.println("\n### 골드가 부족합니다 ###");
-			return;
-		} else {
-			System.out.println("\n*** " + potion.getName() + "을 구매하셨습니다 ***");
-			
-		}
-		
-		warrior.getPotion().put(potion.getName(), 
-				warrior.getPotion().get(potion.getName()) + 1);
+		warrior.minusGold(potion.getPrice(), potion);
 		
 		System.out.println("\n현재 보유 물약 : " + warrior.getPotion());
 		
@@ -215,7 +207,7 @@ public class GamePlayView {
 			
 			System.out.println("1. 능력치 추가");
 			System.out.println("2. 무기 인벤토리");
-			System.out.println("3. 물약 사용");
+			System.out.println("3. 물약 인벤토리");
 			System.out.println("0. 이전 메뉴로 돌아가기\n");
 			
 			System.out.print("선택 : ");

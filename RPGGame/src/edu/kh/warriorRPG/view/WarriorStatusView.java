@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import edu.kh.warriorRPG.model.dao.Potion;
 import edu.kh.warriorRPG.model.dao.Warrior;
 import edu.kh.warriorRPG.model.dao.Weapon;
 import edu.kh.warriorRPG.model.service.WarriorRPGService;
@@ -55,11 +56,11 @@ public class WarriorStatusView {
 			System.out.println("\n========== [무기 인벤토리] ==========\n");
 			
 			if(weapon.isEmpty()) {
-				System.out.println("\n보유한 무기가 없습니다."); 
+				System.out.println("보유한 무기가 없습니다."); 
 				return;
 			}
 			for(int i = 0; i < weapon.size(); i++) {
-				System.out.println((i+1) + ". " + (weapon.get(i).getName() + " " + weapon.get(i).getKind())
+				System.out.println((i+1) + ". " + (weapon.get(i).getName())
 						+ "[공격력+" + weapon.get(i).getAttack() + "]");
 			}
 			System.out.println("\n0. 이전 메뉴로 나가기");
@@ -69,9 +70,16 @@ public class WarriorStatusView {
 			
 			if(input == 0) return;
 			
-			warrior.setAttackEquip(weapon.get(input-1));
-			System.out.println("\n[" + weapon.get(input-1).getKind() + " " + weapon.get(input-1).getName() + "] 이(가) 장착되었습니다.\n");
-			return;
+			if(warrior.getLevel() >= weapon.get(input-1).getAvaliableLevel()) {
+				warrior.setAttackEquip(weapon.get(input-1));
+				System.out.println("\n[" + weapon.get(input-1).getName() + "] 이(가) 장착되었습니다.\n");
+				return;
+			} else {
+				System.out.printf("\n현재 레벨 %d : %s[%d레벨] 사용 불가능한 상태입니다.\n",
+						warrior.getLevel(), weapon.get(input-1).getName(), weapon.get(input-1).getAvaliableLevel());
+				return;
+			}
+			
 		}
 		
 		
@@ -79,7 +87,12 @@ public class WarriorStatusView {
 	
 	// 3. 물약 사용
 	public void usePotion() {
-		
+		while(true) {
+			for(String potion : warrior.getPotion().keySet()) {
+				
+			}
+			
+		}
 	}
 
 }

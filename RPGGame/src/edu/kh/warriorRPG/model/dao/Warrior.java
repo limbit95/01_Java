@@ -47,13 +47,39 @@ public class Warrior implements Serializable {
 	}
 
 	// 골드 차감 메서드
-	public boolean minusGold(int amount) {
-		if(gold < amount) {
-			return false;
+	public void minusGold(int price, Object object) {
+		if(gold < price) {
+			System.out.println("\n### 골드가 부족합니다 ###");
+			return;
 		}
 		
-		gold -= amount;
-		return true;
+		
+		
+		if(object.getClass() == Weapon.class) {
+			Weapon weapon = (Weapon)object;
+			
+			if(this.weaponList.contains(weapon)) {
+				System.out.println("\n이미 구매한 무기입니다.");
+				return;
+			}
+			
+			gold -= price;
+			
+			System.out.println("\n*** " + weapon.getName() + "을 구매하셨습니다 ***");
+			weaponList.add(weapon);
+			System.out.println("\n*** 무기 인벤토리에 [" + weapon.getName() + "] 이(가) 추가 되었습니다 ***");
+			
+			return;
+		}
+		
+		if(object.getClass() == Potion.class) {
+			Potion potion = (Potion)object;
+			
+			System.out.println("\n*** " + potion.getName() + "을 구매하셨습니다 ***");
+			this.potion.put(potion.getName(), this.potion.get(potion.getName()) + 1);
+			
+			return;
+		}
 	}
 	
 	

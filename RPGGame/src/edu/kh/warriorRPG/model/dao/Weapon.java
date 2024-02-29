@@ -14,7 +14,7 @@ public class Weapon implements Serializable {
 
 	public Weapon(String name, String kind, int attack, int avaliableLevel, int price) {
 		super();
-		this.name = name;
+		this.name = name + " " + kind;
 		this.kind = kind;
 		this.attack = attack;
 		this.avaliableLevel = avaliableLevel;
@@ -27,7 +27,7 @@ public class Weapon implements Serializable {
 
 	@Override
 	public String toString() {
-		return name + " " + kind + "[공격력+" + attack + "]" + " / " + avaliableLevel + "레벨 이상 사용 가능" + " / " + price + "원";
+		return name + "[공격력+" + attack + "]" + " / " + avaliableLevel + "레벨 이상 사용 가능" + " / " + price + "원";
 	}
 
 	
