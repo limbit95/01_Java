@@ -8,8 +8,8 @@ public class ObjectRun {
 		
 		ObjectService service = new ObjectService();
 		
-//		service.objectOutput();
-		service.objectInput();
+		service.objectOutput();
+//		service.objectInput();
 		
 	}
 }

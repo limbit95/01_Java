@@ -35,7 +35,7 @@ public class GamePlayView {
 	
 	private Map<Integer, Potion> potionShop = new TreeMap<Integer, Potion>();
 	{
-		potionShop.put(1, new Potion("하급 물약", 5, 10));
+		potionShop.put(1, new Potion("하급 물약", 5, 20));
 		potionShop.put(2, new Potion("중급 물약", 50, 50));
 		potionShop.put(3, new Potion("상급 물약", 100, 100));
 	}
@@ -181,7 +181,7 @@ public class GamePlayView {
 			System.out.println(i + ". " + potionShop.get(i));
 		}
 		
-		System.out.println("0. 상점 나가기\n");
+		System.out.println("\n0. 상점 나가기\n");
 		
 		System.out.println("보유 골드 : " + warrior.getGold() + "\n");
 		
@@ -194,8 +194,12 @@ public class GamePlayView {
 		
 		warrior.minusGold(potion.getPrice(), potion);
 		
-		System.out.println("\n현재 보유 물약 : " + warrior.getPotion());
-		
+		int cnt = 1;
+		for(Potion potion2 : warrior.getPotion().keySet()) {
+			System.out.println("\n=== 현재 보유 물약 ===\n"
+							 + cnt + ". " + potion2.getName() + " - " + warrior.getPotion().get(potion2) + "개");
+		}
+	
 	}
 	
 	// 3. 캐릭터 상태
@@ -208,7 +212,7 @@ public class GamePlayView {
 			System.out.println("1. 능력치 추가");
 			System.out.println("2. 무기 인벤토리");
 			System.out.println("3. 물약 인벤토리");
-			System.out.println("0. 이전 메뉴로 돌아가기\n");
+			System.out.println("\n0. 이전 메뉴로 돌아가기\n");
 			
 			System.out.print("선택 : ");
 			input = Integer.parseInt(br.readLine());

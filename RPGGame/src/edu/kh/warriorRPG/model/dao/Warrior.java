@@ -18,7 +18,7 @@ public class Warrior implements Serializable {
 	private int attack; // 공격력
 	private Weapon attackEquip; // 장착 무기
 	private int stat; // 스탯포인트
-	private Map<String, Integer> potion; // 물약 주머니
+	private Map<Potion, Integer> potion; // 물약 주머니
 	private int gold; // 돈
 	private boolean isAlive; // 사망여부
 	private List<Weapon> weaponList; // 보유 무기 리스트
@@ -35,11 +35,9 @@ public class Warrior implements Serializable {
 		this.attack = 5;
 		this.attackEquip = new Weapon("맨", "주먹", 3, 1, 0);
 		this.stat = 0;
-		this.potion = new TreeMap<String, Integer>();
+		this.potion = new TreeMap<Potion, Integer>();
 		{
-			potion.put("하급 물약", 3);
-			potion.put("중급 물약", 0);
-			potion.put("상급 물약", 0);
+			potion.put(new Potion("하급 물약", 5, 20), 3);
 		}
 		this.gold = 10;
 		this.isAlive = true;
@@ -76,7 +74,7 @@ public class Warrior implements Serializable {
 			Potion potion = (Potion)object;
 			
 			System.out.println("\n*** " + potion.getName() + "을 구매하셨습니다 ***");
-			this.potion.put(potion.getName(), this.potion.get(potion.getName()) + 1);
+			this.potion.put(potion, this.potion.get(potion) + 1);
 			
 			return;
 		}
@@ -126,7 +124,7 @@ public class Warrior implements Serializable {
 	
 	
 	
-	// 체력 증가 
+	// 영구 체력 증가 
 	public void maxHpUp() {
 		if(stat > 0) {
 			System.out.println("체력이 [10] 증가하였습니다.");
@@ -136,7 +134,7 @@ public class Warrior implements Serializable {
 			System.out.println("스탯 포인트가 부족합니다.");
 		}
 	}
-	// 공격력 증가
+	// 영구 공격력 증가
 	public void attackUp() {
 		if(stat > 0) {
 			System.out.println("공격력이 [3] 증가하였습니다.");
@@ -147,6 +145,30 @@ public class Warrior implements Serializable {
 		}
 	}
 	
+	// 사용한 포션 치유량만큼 캐릭터 hp 회복
+	public void healHp(Potion usePotion) {
+		
+		if(potion.get(usePotion) == 0) {
+			System.out.println("\n### 해당 포션이 부족합니다 ###");
+			return;
+		}
+		
+		if(hp == max_hp) {
+			System.out.println("\n체력이 최대치입니다.");
+			return;
+		}
+		
+		if(hp+usePotion.getHeal() > max_hp) {
+			hp = max_hp;
+			System.out.println("\n*** 최대 체력까지 회복되었습니다 ***");
+			potion.put(usePotion, potion.get(usePotion)-1);
+			return;
+		}
+		
+		hp += usePotion.getHeal();
+		System.out.println("\n*** 체력이 [" + usePotion.getHeal() + "] 회복되었습니다 ***");
+		potion.put(usePotion, potion.get(usePotion)-1);
+	}
 	
 
 	
@@ -155,14 +177,14 @@ public class Warrior implements Serializable {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append(String.format("\n*** " +  name + "의 상태창 ***")).append("\n");
-		sb.append(String.format("레벨 : " +  level)).append("\n");
-		sb.append(String.format("경험치 : " +  exp)).append("\n");
+		sb.append(String.format("레벨 : " +  level));
+		sb.append(String.format(" │ 경험치 : " +  exp  + "/100")).append("\n");
 		sb.append(String.format("체력 : " +  hp + "/" + max_hp)).append("\n");
-		sb.append(String.format("공격력 : " + attack  + "[+" + (attackEquip.getAttack()) + "]")).append("\n");
-		sb.append(String.format("장비(무기) : " +  attackEquip)).append("\n");
+		sb.append(String.format("공격력 : " + attack  + "[" + attackEquip.getName() + "+" + (attackEquip.getAttack()) + "]")).append("\n");
+//		sb.append(String.format("장비(무기) : " +  attackEquip.getName())).append("\n");
 		sb.append(String.format("스탯포인트 : " +  stat)).append("\n");
 		sb.append(String.format("골드 : " +  gold)).append("\n");
-		sb.append(String.format("아이템(물약) : " +  potion)).append("\n");
+//		sb.append(String.format("아이템(물약) : " +  potion)).append("\n");
 		sb.append(String.format("생존여부 : " + (isAlive ? "생존" : "사망"))).append("\n");
 		
 		return sb.toString();
@@ -218,10 +240,10 @@ public class Warrior implements Serializable {
 	public void setStat(int stat) {
 		this.stat = stat;
 	}
-	public Map<String, Integer> getPotion() {
+	public Map<Potion, Integer> getPotion() {
 		return potion;
 	}
-	public void setPotion(Map<String, Integer> potion) {
+	public void setPotion(Map<Potion, Integer> potion) {
 		this.potion = potion;
 	}
 	public int getGold() {

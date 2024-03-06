@@ -31,9 +31,9 @@ public class WarriorStatusView {
 			
 			System.out.println("\n현재 스탯 포인트 : " + warrior.getStat() + "\n");
 			
-			System.out.println("1. 체력 증가");
-			System.out.println("2. 공격력 증가");
-			System.out.println("0. 스탯창 나가기\n");
+			System.out.println("1. 체력 증가 [Maxhp+10]");
+			System.out.println("2. 공격력 증가 [attack+3]");
+			System.out.println("\n0. 스탯창 나가기\n");
 			
 			System.out.print("선택 : ");
 			int input = Integer.parseInt(br.readLine());
@@ -54,6 +54,8 @@ public class WarriorStatusView {
 			List<Weapon> weapon = warrior.getWeaponList(); 
 			
 			System.out.println("\n========== [무기 인벤토리] ==========\n");
+			
+			System.out.println("현재 장착 무기 : " + warrior.getAttackEquip().getName() + "\n");
 			
 			if(weapon.isEmpty()) {
 				System.out.println("보유한 무기가 없습니다."); 
@@ -86,11 +88,34 @@ public class WarriorStatusView {
 	}
 	
 	// 3. 물약 사용
-	public void usePotion() {
+	public void usePotion() throws Exception {
 		while(true) {
-			for(String potion : warrior.getPotion().keySet()) {
-				
+			System.out.println("\n========== [물약 인벤토리] ==========\n");
+			
+			if(warrior.getPotion().isEmpty()) {
+				System.out.println("보유한 물약이 없습니다.");
+				return;
 			}
+			
+			int cnt = 1;
+			for(Potion potion : warrior.getPotion().keySet()) {
+				System.out.println(cnt + ". " + potion.getName() + "[hp+" + potion.getHeal() + "] - " + warrior.getPotion().get(potion) + "개");
+			}
+			
+			System.out.println("\n0. 이전 메뉴로 나가기");
+			
+			System.out.print("\n선택(물약 사용) : ");
+			int input = Integer.parseInt(br.readLine());
+			
+			if(input == 0) return;
+			
+			int potionNum = 1;
+			for(Potion potion : warrior.getPotion().keySet()) {
+				if(input == potionNum) {
+					warrior.healHp(potion);
+				}
+			}
+			
 			
 		}
 	}

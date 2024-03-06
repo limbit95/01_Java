@@ -1,6 +1,8 @@
 package edu.kh.warriorRPG.model.dao;
 
-public class Potion {
+import java.io.Serializable;
+
+public class Potion implements Comparable<Potion>, Serializable{
 
 	private String name;
 	private int price;
@@ -18,7 +20,7 @@ public class Potion {
 	
 	@Override
 	public String toString() {
-		return name + "[hp+" + heal + "] / " + price + "원";
+		return name + "[hp+" + heal + "] / " + price + "골드";
 	}
 	
 	
@@ -40,6 +42,21 @@ public class Potion {
 	}
 	public void setHeal(int heal) {
 		this.heal = heal;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	@Override
+	public int compareTo(Potion o) {
+		return 0;
 	}
 	
 }
