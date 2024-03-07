@@ -1,5 +1,7 @@
 package edu.kh.warriorRPG.run;
 
+import java.util.Random;
+
 import edu.kh.warriorRPG.view.WarriorRPGView;
 
 public class WarriorRPGRun {

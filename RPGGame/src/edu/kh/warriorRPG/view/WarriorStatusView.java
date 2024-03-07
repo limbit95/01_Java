@@ -26,7 +26,7 @@ public class WarriorStatusView {
 		while(true) {
 			System.out.println("\n========== [스탯 정보] ==========");
 			
-			System.out.println("체력 : " + warrior.getHp());
+			System.out.println("체력 : " + warrior.getMax_hp());
 			System.out.println("공격력 : " + warrior.getAttack());
 			
 			System.out.println("\n현재 스탯 포인트 : " + warrior.getStat() + "\n");
@@ -99,7 +99,7 @@ public class WarriorStatusView {
 			
 			int cnt = 1;
 			for(Potion potion : warrior.getPotion().keySet()) {
-				System.out.println(cnt + ". " + potion.getName() + "[hp+" + potion.getHeal() + "] - " + warrior.getPotion().get(potion) + "개");
+				System.out.println(cnt + ". " + potion.getName() + "[hp+" + potion.getHeal() + "]  " + warrior.getPotion().get(potion) + "개");
 			}
 			
 			System.out.println("\n0. 이전 메뉴로 나가기");

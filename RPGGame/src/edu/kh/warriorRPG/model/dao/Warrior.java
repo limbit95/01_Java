@@ -73,6 +73,8 @@ public class Warrior implements Serializable {
 		if(object.getClass() == Potion.class) {
 			Potion potion = (Potion)object;
 			
+			gold -= price;
+			
 			System.out.println("\n*** " + potion.getName() + "을 구매하셨습니다 ***");
 			this.potion.put(potion, this.potion.get(potion) + 1);
 			
@@ -91,7 +93,7 @@ public class Warrior implements Serializable {
 	
 	// 받은 피해 처리 메서드
 	public void damaged(Slime slime) {
-		if(hp < slime.getAttack()) {
+		if(hp <= slime.getAttack()) {
 			hp = 0;
 			exp -= 10;
 			if(exp < 0) {
@@ -103,7 +105,7 @@ public class Warrior implements Serializable {
 			return;
 		}
 		
-		hp -= attack;
+		hp -= slime.getAttack();
 		System.out.println("[" + slime.getAttack() + "]만큼의 데미지를 입었습니다.");
 		System.out.println(name + "의 체력 : [" + hp + "]\n");
 		return;
@@ -158,7 +160,7 @@ public class Warrior implements Serializable {
 			return;
 		}
 		
-		if(hp+usePotion.getHeal() > max_hp) {
+		if(hp+usePotion.getHeal() >= max_hp) {
 			hp = max_hp;
 			System.out.println("\n*** 최대 체력까지 회복되었습니다 ***");
 			potion.put(usePotion, potion.get(usePotion)-1);

@@ -46,7 +46,7 @@ public class Slime {
 	
 	// 받은 피해 처리 메서드
 	public void damaged(Warrior warrior) {
-		if(hp < (warrior.getAttack() + warrior.getAttackEquip().getAttack())) {
+		if(hp <= (warrior.getAttack() + warrior.getAttackEquip().getAttack())) {
 			hp = 0;
 			isAlive = false;
 			System.out.println(name + "의 체력 : [" + hp + "]\n");

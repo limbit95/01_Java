@@ -35,9 +35,9 @@ public class GamePlayView {
 	
 	private Map<Integer, Potion> potionShop = new TreeMap<Integer, Potion>();
 	{
-		potionShop.put(1, new Potion("하급 물약", 5, 20));
-		potionShop.put(2, new Potion("중급 물약", 50, 50));
-		potionShop.put(3, new Potion("상급 물약", 100, 100));
+		potionShop.put(1, new Potion("하급 물약", 5, 10));
+		potionShop.put(2, new Potion("중급 물약", 25, 50));
+		potionShop.put(3, new Potion("상급 물약", 50, 100));
 	}
 	
 	public GamePlayView() {}
@@ -134,7 +134,7 @@ public class GamePlayView {
 		do {
 			System.out.println("1. 슬라임 던전[1~5LV]");
 			System.out.println("2. 고블린 던전[6~10LV]");
-			System.out.println("3. 오크 던전[10~15LV]");
+			System.out.println("3. 오크 던전[11~15LV]");
 			System.out.println("0. 마을로 가기");
 			
 			System.out.print("선택 : ");
