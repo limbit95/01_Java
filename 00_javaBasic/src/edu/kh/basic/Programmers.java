@@ -9,16 +9,15 @@ public class Programmers {
 	
 	public static void main(String[] args) {
 		
-		System.out.println(solution(new int[] {1, 2, 2, 0, 2, 2}));
+		System.out.println(solution(new int[] {0, 1, 2, 3, 4, 5}, new int[] {4, 1, 2}));
 		
 	}
 	
-	public static int[] solution(int[] arr) {
+	public static int[] solution(int[] arr, int[] query) {
 		int[] answer = {};
-        
-		String[] strArr = new String[] {arr.toString()};
 		
-        
+		
+		
         return answer;
     }
 	

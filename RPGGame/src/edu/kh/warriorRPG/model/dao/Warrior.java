@@ -18,9 +18,10 @@ public class Warrior implements Serializable {
 	private int attack; // 공격력
 	private Weapon attackEquip; // 장착 무기
 	private int stat; // 스탯포인트
-	private Map<Potion, Integer> potion; // 물약 주머니
 	private int gold; // 돈
 	private boolean isAlive; // 사망여부
+	
+	private Map<Potion, Integer> potion; // 물약 주머니
 	private List<Weapon> weaponList; // 보유 무기 리스트
 	
 	public Warrior() {}
